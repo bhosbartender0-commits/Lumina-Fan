@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Lumina Fan – Simulasi Interaktif Lumina Fan Dalam Dunia Digital</title>
+  <style>
+    :root {
+      --bg: #f0f0f0; --wood: #deb887; --wood-edge: #8b5a2b;
+      --panel: #1e3a8a; --motor: #999; --blade: #e53935; --blade-edge: #b71c1c;
+      --wire-red: #e53935; --wire-black: #222;
+    }
+    body {
+      background: var(--bg);
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      margin: 20px 0 10px;
+    }
+    svg {
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #status {
+      font-size: 14px;
+      color: #333;
+      margin-top: 10px;
+    }
+    .concept {
+      max-width: 800px;
+      margin: 30px auto;
+      text-align: left;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #222;
+    }
+    .concept h2 {
+      margin-top: 0;
+      color: #b71c1c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lumina Fan – Simulasi Interaktif</h1>
+
+  <svg id="fanSVG" viewBox="0 0 960 540" width="95%" height="auto">
+    <!-- Alas kayu -->
+    <rect x="160" y="430" width="640" height="52" rx="8" fill="var(--wood)" stroke="var(--wood-edge)" stroke-width="2.5"/>
+    <!-- Penyangga kiri -->
+    <rect x="220" y="220" width="36" height="210" rx="8" fill="var(--wood)" stroke="var(--wood-edge)" stroke-width="2"/>
+    <!-- Penyangga kanan -->
+    <rect x="704" y="220" width="36" height="210" rx="8" fill="var(--wood)" stroke="var(--wood-edge)" stroke-width="2"/>
+    <!-- Balok atas -->
+    <rect x="256" y="200" width="448" height="28" rx="8" fill="var(--wood)" stroke="var(--wood-edge)" stroke-width="2"/>
+    <!-- Panel kiri -->
+    <rect x="140" y="260" width="92" height="132" rx="8" fill="var(--panel)" stroke="#000"/>
+    <!-- Panel kanan -->
+    <rect x="728" y="260" width="92" height="132" rx="8" fill="var(--panel)" stroke="#000"/>
+    <!-- Tiang tengah -->
+    <rect x="470" y="228" width="20" height="140" rx="8" fill="#3fb389" stroke="#227e6d" stroke-width="2"/>
+    <!-- Motor -->
+    <circle cx="480" cy="220" r="22" fill="var(--motor)" stroke="#555" stroke-width="2"/>
+    <!-- Baling-baling -->
+    <g id="fan" transform="translate(480,220)">
+      <circle cx="0" cy="0" r="8" fill="#ff9f73" stroke="#ff7a45"/>
+      <path d="M0,0 C15,-40 15,-80 0,-120 C-15,-80 -15,-40 0,0Z" fill="var(--blade)" stroke="var(--blade-edge)" stroke-width="2"/>
+      <path d="M0,0 C40,15 80,35 100,70 C70,60 30,40 0,0Z" fill="var(--blade)" stroke="var(--blade-edge)" stroke-width="2"/>
+      <path d="M0,0 C-40,15 -80,35 -100,70 C-70,60 -30,40 0,0Z" fill="var(--blade)" stroke="var(--blade-edge)" stroke-width="2"/>
+    </g>
+    <!-- Kabel -->
+    <path d="M232,300 C300,340 380,360 470,340" stroke="var(--wire-red)" stroke-width="3" fill="none"/>
+    <path d="M232,330 C300,360 380,380 470,360" stroke="var(--wire-black)" stroke-width="3" fill="none"/>
+    <path d="M728,300 C660,340 580,360 490,340" stroke="var(--wire-red)" stroke-width="3" fill="none"/>
+    <path d="M728,330 C660,360 580,380 490,360" stroke="var(--wire-black)" stroke-width="3" fill="none"/>
+  </svg>
+
+  <div>
+    <button id="btnSun">Kena Cahaya Matahari</button>
+    <button id="btnNoSun">Tidak Kena Cahaya</button>
+  </div>
+  <div id="status">Klik tombol untuk simulasi cahaya matahari</div>
+
+  <div class="concept">
+    <h2>Konsep Fisika Lumina Fan</h2>
+    <p><b>Panel surya</b> Bekerja menggunakan prinsip <i>efek fotovoltaik</i>, yaitu proses konversi energi cahaya matahari menjadi energi listrik melalui material semikonduktor tipe <i>p-n junction</i>. Ketika foton dari sinar matahari mengenai permukaan sel surya, elektron dalam material semikonduktor tereksitasi dan berpindah, menghasilkan arus listrik searah (DC).</p>
+    <p>Panel surya yang digunakan dalam Lumina Fan umumnya bertipe <b>monokristalin</b> atau <b>polikristalin</b>, dengan efisiensi konversi energi berkisar antara 15–22%. Untuk versi mini edukatif, kapasitas listrik yang dihasilkan berkisar antara 1–2 Watt, cukup untuk menggerakkan motor DC berdaya rendah.</p>
+    <p><b>Motor DC</b> bekerja berdasarkan prinsip elektromagnetik Faraday, di mana arus listrik yang mengalir dalam kumparan akan menghasilkan medan magnet yang memutar poros motor. Putaran ini kemudian ditransfer ke baling-baling kipas, menghasilkan aliran udara.</p>
+    <p><b>Skema alur konversi energi:</b><br>
+    🌞 Energi surya → ⚡ listrik DC di panel → 🔄 motor DC → ⚙️ energi mekanik → 💨 aliran angin dari kipas</p>
+  </div>
+
+  <script>
+    const fan = document.getElementById('fan');
+    const btnSun = document.getElementById('btnSun');
+    const btnNoSun = document.getElementById('btnNoSun');
+    const status = document.getElementById('status');
+
+    let fanOn = false;
+    let rpm = 0;
+    let angle = 0;
+    let lastTime = null;
+
+    btnSun.addEventListener('click', () => {
+      fanOn = true;
+      status.textContent = "Panel terkena cahaya matahari – kipas berputar";
+      lastTime = null;
+      requestAnimationFrame(step);
+    });
+
+    btnNoSun.addEventListener('click', () => {
+      fanOn = false;
+      status.textContent = "Panel tidak terkena cahaya – kipas melambat";
+    });
+
+    function step(ts) {
+      if (lastTime === null) lastTime = ts;
+      const dt = (ts - lastTime) / 1000;
+      lastTime = ts;
+
+      if (fanOn) {
+        if (rpm < 800) rpm += 250 * dt;
+      } else {
+        if (rpm > 0) rpm -= 200 * dt;
+        if (rpm < 0) rpm = 0;
+      }
+
+      angle = (angle + rpm * 6 * dt) % 360;
+      fan.setAttribute('transform', `translate(480,220) rotate(${angle})`);
+
+      if (rpm > 0 || fanOn) requestAnimationFrame(step);
+    }
+  </script>
+</body>
+</html>
